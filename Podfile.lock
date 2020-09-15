@@ -4,6 +4,11 @@ PODS:
   - RxCocoa (5.1.1):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
+  - RxCoreLocation (1.5.0):
+    - RxCoreLocation/Core (= 1.5.0)
+  - RxCoreLocation/Core (1.5.0):
+    - RxCocoa (~> 5.1)
+    - RxSwift (~> 5.1)
   - RxDataSources (4.0.1):
     - Differentiator (~> 4.0)
     - RxCocoa (~> 5.0)
@@ -32,6 +37,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire
   - RxCocoa
+  - RxCoreLocation
   - RxDataSources
   - RxKeyboard
   - RxSwift
@@ -46,6 +52,7 @@ SPEC REPOS:
     - Alamofire
     - Differentiator
     - RxCocoa
+    - RxCoreLocation
     - RxDataSources
     - RxKeyboard
     - RxRelay
@@ -60,6 +67,7 @@ SPEC CHECKSUMS:
   Alamofire: 9d5c5f602928e512395b30950c5984eca840093c
   Differentiator: 886080237d9f87f322641dedbc5be257061b0602
   RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
+  RxCoreLocation: 4789d980742b21c087062387f6758b456221fb2f
   RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
   RxKeyboard: 6683c4344304a00f943c158bd8a43ce5469c82a7
   RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
@@ -70,6 +78,6 @@ SPEC CHECKSUMS:
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
   SwinjectAutoregistration: 330f5012642a8b5c89a8a4adb0c5e52df07382c0
 
-PODFILE CHECKSUM: f0d3fd77e31437cadf116f038e0046db0ce2a312
+PODFILE CHECKSUM: c4a40395cfbb9b7508ed9be8c40e02748d4c08c2
 
 COCOAPODS: 1.9.1

@@ -8,7 +8,7 @@
 
 import Foundation
 
+
 public enum ApiEndPoint: String {
-    case categories = "/v1/floors"
-    case products = "/v2/products"
+    case currentWeather = "/data/2.5/weather?lat=%f&lon=%f&appid=%@"
 }

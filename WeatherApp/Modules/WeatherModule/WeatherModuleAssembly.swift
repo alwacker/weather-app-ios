@@ -13,5 +13,7 @@ internal class WeatherModuleAssembly: Assembly {
     func assemble(container: Container) {
         container
             .autoregister(WeatherService.self, initializer: WeatherService.init)
+        container
+            .autoregister(WeatherApi.self, initializer: WeatherApi.init(base:))
     }
 }

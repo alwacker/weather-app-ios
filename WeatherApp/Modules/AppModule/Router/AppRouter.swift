@@ -17,6 +17,10 @@ class AppRouter {
         self.resolver = resolver
     }
     
+    private func getWeatherModule() -> UIViewController {
+        let module = resolver.resolve(WeatherModule.self)!
+        return module.createTabbar()
+    }
   
     
     public func initialize() -> UIViewController {
@@ -24,7 +28,7 @@ class AppRouter {
             return getCurrentWeatherScreen()
         
         #else
-        return UIViewController()
+        return getWeatherModule()
         #endif
     }
 }

@@ -18,8 +18,10 @@ class WeatherModule: Module {
     public func createTabbar() -> UIViewController {
         let tabBarVC = UITabBarController()
         let weatherSection = showCurrentWeatherSection()
+        let forecastSection = showForecastSection()
         weatherSection.tabBarItem = UITabBarItem(title: "Today", image: #imageLiteral(resourceName: "today_inactive_icon"), selectedImage: #imageLiteral(resourceName: "today_active_icon"))
-        tabBarVC.viewControllers = [weatherSection]
+        forecastSection.tabBarItem = UITabBarItem(title: "Forecast", image: #imageLiteral(resourceName: "forecast_inactive_icon"), selectedImage: #imageLiteral(resourceName: "forecast_active_icon"))
+        tabBarVC.viewControllers = [weatherSection, forecastSection]
         return tabBarVC
     }
     

@@ -148,8 +148,8 @@ extension ObservableType where Element: ApiEventConvertible, Element.Data: Any  
                     return .error(message: error.localizedDescription)
                 }
             }
-            }
-            .asDriver(onErrorDriveWith: .empty())
+        }
+        .asDriver(onErrorDriveWith: .empty())
     }
 }
 
@@ -166,29 +166,29 @@ extension ObservableType where Element == Bool  {
                     return .loaded
                 }
             }
-            }
-            .catchError { error -> Observable<HudStatus> in
-                if let error = error as? ApiError {
-                    let message: String
-                    //Try default error message
-                    if let msg = defaultError {
-                        message = msg
-                    } else {
-                        //Parse ApiError
-                        switch error {
-                        case .jsonParseError(let msg):
-                            message = msg
-                        case .encodingError(let msg):
-                            message = msg
-                        case .error(let msg):
-                            message = msg
-                        }
-                    }
-                    return .just(.error(message: message))
+        }
+        .catchError { error -> Observable<HudStatus> in
+            if let error = error as? ApiError {
+                let message: String
+                //Try default error message
+                if let msg = defaultError {
+                    message = msg
                 } else {
-                    return .just(.error(message: error.localizedDescription))
+                    //Parse ApiError
+                    switch error {
+                    case .jsonParseError(let msg):
+                        message = msg
+                    case .encodingError(let msg):
+                        message = msg
+                    case .error(let msg):
+                        message = msg
+                    }
                 }
+                return .just(.error(message: message))
+            } else {
+                return .just(.error(message: error.localizedDescription))
             }
-            .asDriver(onErrorDriveWith: .empty())
+        }
+        .asDriver(onErrorDriveWith: .empty())
     }
 }

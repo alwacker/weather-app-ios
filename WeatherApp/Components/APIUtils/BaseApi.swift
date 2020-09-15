@@ -72,12 +72,12 @@ class BaseApi {
     public init(baseUrl: String) {
         self.base = ApiGateway(baseUrl: baseUrl)
     }
-    
-    func getEndpointUrl(endPoint: ApiEndPoint) -> String {
+
+    func getEndpointUrl(endPoint: String) -> String {
         return base.getEndpointURL(endPoint: endPoint)
     }
-    
-    public func request<T:Decodable>(endPoint: ApiEndPoint, method: Method = .get, params: [String: Any]? = nil, headers: HTTPHeaders? = nil) -> Observable<ApiEvent<T>> {
+
+    public func request<T:Decodable>(endPoint: String, method: Method = .get, params: [String: Any]? = nil, headers: HTTPHeaders? = nil) -> Observable<ApiEvent<T>> {
         return ApiProvider.instance.request(endPoint: getEndpointUrl(endPoint: endPoint), method: method, params: params, headers: headers)
     }
 }

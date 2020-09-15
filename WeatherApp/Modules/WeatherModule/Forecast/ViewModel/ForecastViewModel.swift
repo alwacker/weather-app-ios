@@ -13,8 +13,11 @@ class ForecastViewModel {
     //inputs
     let didLoad = PublishSubject<Void>()
     //output
+    let title: Driver<String>
     
-    init() {
-        
+    init(service: WeatherService) {
+        title = didLoad
+            .mapTo("Forecast")
+            .asDriver(onErrorDriveWith: .empty())
     }
 }

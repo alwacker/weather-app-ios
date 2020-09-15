@@ -23,7 +23,7 @@ class AppContainer {
         }
         
         container.register(ApiGateway.self) { resolver in
-            return ApiGateway(baseUrl: "https://www.alza.cz/Services/RestService.svc")
+            return ApiGateway(baseUrl: "http://api.openweathermap.org")
         }
     }
 }

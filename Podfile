@@ -1,6 +1,6 @@
 # Uncomment the next line to define a global platform for your project
 # platform :ios, '9.0'
-
+# source 'https://github.com/CocoaPods/Specs.git'
 target 'WeatherApp' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
@@ -10,6 +10,7 @@ target 'WeatherApp' do
   pod 'RxCocoa'
   pod 'RxSwiftExt'
   pod 'RxKeyboard'
+  pod 'RxCoreLocation'
   pod 'RxDataSources'
   pod 'Swinject'
   pod 'SwinjectAutoregistration'
