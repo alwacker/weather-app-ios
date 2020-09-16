@@ -16,4 +16,9 @@ class WeatherApi: BaseApi {
         let endPoint = String(format: ApiEndPoint.currentWeather.rawValue, latitude, longtitude, apiKey)
         return request(endPoint: endPoint)
     }
+    
+    func getForecast(with latitude: Double, longtitude: Double) -> Observable<ApiEvent<ForecastEntity>> {
+        let endPoint = String(format: ApiEndPoint.forecast.rawValue, latitude, longtitude, apiKey)
+        return request(endPoint: endPoint)
+    }
 }

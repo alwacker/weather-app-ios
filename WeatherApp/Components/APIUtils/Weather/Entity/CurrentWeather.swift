@@ -28,7 +28,7 @@ struct System: Decodable {
     let country: String?
 }
 
-struct Weather: Decodable {
+struct Weather: Decodable, Equatable {
     let main: String
     let icon: String
     let description: String
@@ -46,7 +46,7 @@ struct Weather: Decodable {
     }
 }
 
-struct Temperatures: Decodable {
+struct Temperatures: Decodable, Equatable {
     let temp: Float
     let pressure: Int
     let humidity: Int

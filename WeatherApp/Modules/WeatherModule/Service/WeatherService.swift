@@ -24,4 +24,10 @@ class WeatherService {
         )
     }
     
+    func getForecast(with location: CLLocation) -> Observable<ApiEvent<ForecastEntity>> {
+        return api.getForecast(
+            with: location.coordinate.latitude.magnitude,
+            longtitude: location.coordinate.longitude.magnitude
+        )
+    }
 }

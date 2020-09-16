@@ -30,6 +30,7 @@ class CurrentWeatherViewController: BaseViewController {
     @IBOutlet private weak var windIcon: UIImageView!
     @IBOutlet private weak var windDirectionIcon: UIImageView!
     @IBOutlet private weak var shareButton: UIButton!
+    @IBOutlet private weak var errorView: ErrorView!
     @IBOutlet private weak var scrollView: UIScrollView! {
         didSet {
             scrollView.refreshControl = UIRefreshControl()
@@ -62,11 +63,19 @@ class CurrentWeatherViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         manager.requestWhenInUseAuthorization()
-        manager.startUpdatingLocation()
+        updateLocation()
         setupBinding()
     }
     
+    private func hideUI(with error: Error) {
+        scrollView.isHidden = true
+        errorView.isHidden = false
+        errorView.setupUI(with: "")
+    }
+    
     private func showUI(if hidden: Bool) {
+        scrollView.isHidden = hidden
+        errorView.isHidden = !hidden
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
             self.conditionIcon.isHidden = hidden
             self.cityLabel.isHidden = hidden
@@ -89,10 +98,14 @@ class CurrentWeatherViewController: BaseViewController {
     }
     
     @objc private func handleRefreshControl() {
-        manager.startUpdatingLocation()
+        updateLocation()
         DispatchQueue.main.async { [weak self] in
             self?.scrollView.refreshControl?.endRefreshing()
         }
+    }
+    
+    private func updateLocation() {
+        manager.startUpdatingLocation()
     }
     
     private func setupBinding() {
@@ -108,6 +121,19 @@ class CurrentWeatherViewController: BaseViewController {
                 onNext: { [weak self] in
                     self?.manager.stopUpdatingLocation()
                 }
+        ).disposed(by: disposeBag)
+        
+        viewModel.tryAgain
+            .drive(
+                onNext: { [weak self] in
+                    self?.updateLocation()
+                }
+        ).disposed(by: disposeBag)
+        
+        viewModel.hide.drive(
+            onNext: { [weak self] in
+                self?.hideUI(with: $0)
+            }
         ).disposed(by: disposeBag)
         
         viewModel.humidity
@@ -144,6 +170,10 @@ class CurrentWeatherViewController: BaseViewController {
         
         manager.rx.location
             .bind(to: viewModel.location)
+            .disposed(by: disposeBag)
+        
+        manager.rx.didChangeAuthorization
+            .bind(to: viewModel.authorizationState)
             .disposed(by: disposeBag)
         
         viewModel.title

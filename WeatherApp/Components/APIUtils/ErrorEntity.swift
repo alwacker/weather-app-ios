@@ -40,7 +40,7 @@ public struct ErrorEntity: Decodable, CustomNSError {
         }
     }
     enum CodingKeys : String, CodingKey {
-        case errorCode = "err"
-        case message = "msg"
+        case errorCode = "cod"
+        case message = "message"
     }
 }

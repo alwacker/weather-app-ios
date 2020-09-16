@@ -17,6 +17,7 @@
             <connections>
                 <outlet property="cityLabel" destination="gIJ-81-Vjt" id="6Ze-kf-kSU"/>
                 <outlet property="conditionIcon" destination="blY-Hi-hlQ" id="957-VW-WhJ"/>
+                <outlet property="errorView" destination="a6K-Zf-jC8" id="eIP-if-sAF"/>
                 <outlet property="higherDivider" destination="xRd-3W-rT4" id="Wb8-D2-nCO"/>
                 <outlet property="humidityIcon" destination="glz-8k-vuE" id="5OI-Xg-dG5"/>
                 <outlet property="humidityLabel" destination="Yhc-Yk-edr" id="tYI-eb-1yL"/>
@@ -44,6 +45,10 @@
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rainbow_line" translatesAutoresizingMaskIntoConstraints="NO" id="R4O-yn-HOb">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="2"/>
                 </imageView>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a6K-Zf-jC8" customClass="ErrorView" customModule="WeatherApp" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="2" width="320" height="566"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                </view>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pQB-ym-4I4">
                     <rect key="frame" x="0.0" y="2" width="320" height="566"/>
                     <subviews>
@@ -251,9 +256,13 @@
                 <constraint firstAttribute="trailing" secondItem="R4O-yn-HOb" secondAttribute="trailing" id="BI8-D3-VcS"/>
                 <constraint firstItem="R4O-yn-HOb" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="BwP-KH-7qU"/>
                 <constraint firstAttribute="trailing" secondItem="pQB-ym-4I4" secondAttribute="trailing" id="Kaf-8c-DmS"/>
+                <constraint firstItem="kai-Gc-7bf" firstAttribute="bottom" secondItem="a6K-Zf-jC8" secondAttribute="bottom" id="ObS-z8-ace"/>
+                <constraint firstItem="a6K-Zf-jC8" firstAttribute="leading" secondItem="kai-Gc-7bf" secondAttribute="leading" id="Pw4-VY-Wao"/>
                 <constraint firstItem="R4O-yn-HOb" firstAttribute="top" secondItem="kai-Gc-7bf" secondAttribute="top" id="Vsj-dY-42e"/>
                 <constraint firstItem="pQB-ym-4I4" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="WkY-iQ-fj1"/>
+                <constraint firstItem="kai-Gc-7bf" firstAttribute="trailing" secondItem="a6K-Zf-jC8" secondAttribute="trailing" id="b5P-Pm-mRK"/>
                 <constraint firstAttribute="bottom" secondItem="pQB-ym-4I4" secondAttribute="bottom" id="oSa-f2-NYu"/>
+                <constraint firstItem="a6K-Zf-jC8" firstAttribute="top" secondItem="R4O-yn-HOb" secondAttribute="bottom" id="tl8-Pw-igt"/>
                 <constraint firstItem="pQB-ym-4I4" firstAttribute="top" secondItem="R4O-yn-HOb" secondAttribute="bottom" id="wfX-Vv-B91"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="kai-Gc-7bf"/>

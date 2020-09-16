@@ -9,11 +9,14 @@
 import RxSwift
 import RxCocoa
 import CoreLocation
+import RxCoreLocation
 
 class CurrentWeatherViewModel {
     //inputs
     let didLoad = PublishSubject<Void>()
     let location = PublishSubject<CLLocation?>()
+    let authorizationState = PublishSubject<CLAuthorizationEvent>()
+    let tryAgainButtonPressed = PublishSubject<Void>()
     //outputs
     let title: Driver<String>
     let conditionsText: Driver<String>
@@ -26,6 +29,8 @@ class CurrentWeatherViewModel {
     let windDirection: Driver<String>
     let disableTracking: Driver<Void>
     let unhide: Driver<Bool>
+    let tryAgain: Driver<Void>
+    let hide: Driver<Error>
     let hud: Driver<HudStatus>
     
     init(service: WeatherService) {
@@ -34,12 +39,28 @@ class CurrentWeatherViewModel {
             .share()
         
         let data = request.data()
+        let error = request.errors()
+        
+        hide = error
+            .asDriver(onErrorDriveWith: .empty())
         
         unhide = data.mapTo(false)
             .asDriver(onErrorDriveWith: .empty())
         
-        disableTracking = data.toVoid()
+        disableTracking = Observable
+            .merge(data.toVoid(), error.toVoid())
             .asDriver(onErrorDriveWith: .empty())
+        
+        tryAgain = tryAgainButtonPressed
+            .asDriver(onErrorDriveWith: .empty())
+        
+//        authorizationState.subscribe(onNext: {
+//            switch $0 {
+//            case .denied:
+//            case .authorizedWhenInUse, .authorizedAlways, .authorized:
+//                
+//            }
+//        })
         
         //A little hack, cause this value not going from BE
         precipitation = didLoad
