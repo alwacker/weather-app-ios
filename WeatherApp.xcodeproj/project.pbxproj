@@ -160,6 +160,7 @@
 		D4F2EF682512FDC80099DCCA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D4F2EF6C2512FDDA0099DCCA /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		D4F2EF79251316E80099DCCA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		D4F2EF9E25131A540099DCCA /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,6 +206,7 @@
 		D40D2230250FEDA000BAE760 = {
 			isa = PBXGroup;
 			children = (
+				D4F2EF9E25131A540099DCCA /* README.md */,
 				D40D223B250FEDA000BAE760 /* WeatherApp */,
 				D40D2252250FEDA500BAE760 /* WeatherAppTests */,
 				D40D223A250FEDA000BAE760 /* Products */,
