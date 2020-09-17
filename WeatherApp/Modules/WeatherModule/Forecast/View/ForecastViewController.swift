@@ -19,6 +19,7 @@ class ForecastViewController: UIViewController {
         static let sectionCell = ReusableCell<SectionCell>(nibName: "SectionCell")
     }
     
+    @IBOutlet private weak var errorView: ErrorView!
     @IBOutlet private weak var tableView: UITableView! {
         didSet {
             tableView.refreshControl = UIRefreshControl()
@@ -60,7 +61,7 @@ class ForecastViewController: UIViewController {
             }
         })
         
-        super.init(nibName: "ForecastViewController", bundle: nil)
+        super.init(nibName: String(describing: ForecastViewController.self), bundle: nil)
         
         rx.viewDidLoad
             .bind(to: viewModel.didLoad)
@@ -73,8 +74,7 @@ class ForecastViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        manager.startUpdatingLocation()
-        
+        checkAuthorizationStatus()
         setupBinding()
     }
     
@@ -85,14 +85,83 @@ class ForecastViewController: UIViewController {
         }
     }
     
+    private func checkAuthorizationStatus() {
+        if CLLocationManager.authorizationStatus() == .denied {
+            unautorized()
+        }
+    }
+    
+    private func hideUI(with error: Error) {
+        hideScroll()
+        errorView.setupError(with: error)
+    }
+    
+    private func unautorized() {
+        hideScroll()
+        errorView.setupWarning()
+    }
+    
+    private func hideScroll() {
+        tableView.isHidden = true
+        errorView.isHidden = false
+    }
+    
+    private func showUI(if hidden: Bool) {
+        tableView.isHidden = hidden
+        errorView.isHidden = !hidden
+    }
+    
+    private func updateLocation() {
+        manager.startUpdatingLocation()
+    }
+    
     private func setupBinding() {
+        errorView.tryAgainButtonPressed
+            .bind(to: viewModel.tryAgainButtonPressed)
+            .disposed(by: disposeBag)
+        
+        errorView.settingsButtonPressed
+            .bind(to: viewModel.settingsButtonPressed)
+            .disposed(by: disposeBag)
+        
+        viewModel.authDenied
+            .drive(
+                onNext: { [weak self] in
+                    self?.unautorized()
+                }
+            ).disposed(by: disposeBag)
+        
+        viewModel.unhide
+            .drive(
+                onNext: { [weak self] in
+                    self?.showUI(if: $0)
+                }
+            ).disposed(by: disposeBag)
         
         viewModel.disableTracking
             .drive(
                 onNext: { [weak self] in
                     self?.manager.stopUpdatingLocation()
                 }
-        ).disposed(by: disposeBag)
+            ).disposed(by: disposeBag)
+        
+        viewModel.tryAgain
+            .drive(
+                onNext: { [weak self] in
+                    self?.updateLocation()
+                }
+            ).disposed(by: disposeBag)
+        
+        viewModel.hide
+            .drive(
+                onNext: { [weak self] in
+                    self?.hideUI(with: $0)
+                }
+            ).disposed(by: disposeBag)
+        
+        manager.rx.didChangeAuthorization
+            .bind(to: viewModel.authorizationState)
+            .disposed(by: disposeBag)
         
         manager.rx.location
             .bind(to: viewModel.location)

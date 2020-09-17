@@ -1,0 +1,20 @@
+"TODAY_TITLE"="Today";
+"FORECAST_TITLE"="Forecast";
+"SHARE_BTN_TITLE"="Share";
+"TRY_AGAIN_BTN"="Try again";
+"SETTINGS_BTN_TITLE"="Go to settings";
+"SHARE_MESSAGE"="Hi there! Here is my weather today in %@. Temperature: %@, Conditions: %@";
+
+//Alert
+
+"ALERT_TITLE"="Warning";
+"ALERT_LOCATION_ERROR_MESSAGE"="App doesn`t have access rights to your position. Do you want to change it in settings?";
+"ALERT_LOCATION_SETTINGS_TITLE"="Settings";
+"ALERT_LOCATION_CANCEL"="Cancel";
+
+
+//Errors
+
+"NO_INTERNET_CONNECTION"="The Internet connection appears to be offline. Please check your connection and try again.";
+"UNKNOWN_ERROR"="Something went wrong. Please try again later";
+"NO_LOCAL_ENABLED"="Seems app doesn`t have access to your position. For using current forecast we need to know your current location. Please change it in settings.";

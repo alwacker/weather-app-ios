@@ -15,5 +15,7 @@ internal class ForecastViewAssembly: Assembly {
             .autoregister(ForecastViewModel.self, initializer: ForecastViewModel.init)
         container
             .autoregister(ForecastViewController.self, initializer: ForecastViewController.init)
+        container
+            .autoregister(WeatherRouter.self, initializer: WeatherRouter.init)
     }
 }

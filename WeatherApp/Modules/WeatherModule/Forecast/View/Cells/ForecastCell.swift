@@ -24,6 +24,7 @@ class ForecastCell: UITableViewCell {
         timePredictionLabel.text = nil
         predictionLabel.text = nil
         temperatureLabel.text = nil
+        forecastIcon.image = nil
     }
     
     func setupUI(with weatherItem: WeatherItem) {

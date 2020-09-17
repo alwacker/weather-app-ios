@@ -10,7 +10,6 @@ import RxSwift
 import CoreLocation
 
 class WeatherService {
-    
     private let api: WeatherApi
     
     init(api: WeatherApi) {

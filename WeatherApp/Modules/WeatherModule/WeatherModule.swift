@@ -15,19 +15,29 @@ class WeatherModule: Module {
         self.assembler = assembler.with(assemblies: WeatherModuleAssembly())
     }
     
-    public func createTabbar() -> UIViewController {
+    public func createTabbar(with transitionHandler: TransitionHandler) -> UIViewController {
         let tabBarVC = UITabBarController()
-        let weatherSection = showCurrentWeatherSection()
-        let forecastSection = showForecastSection()
-        weatherSection.tabBarItem = UITabBarItem(title: "Today", image: #imageLiteral(resourceName: "today_inactive_icon"), selectedImage: #imageLiteral(resourceName: "today_active_icon"))
-        forecastSection.tabBarItem = UITabBarItem(title: "Forecast", image: #imageLiteral(resourceName: "forecast_inactive_icon"), selectedImage: #imageLiteral(resourceName: "forecast_active_icon"))
+        let weatherSection = showCurrentWeatherSection(with: transitionHandler)
+        let forecastSection = showForecastSection(with: transitionHandler)
+        weatherSection.tabBarItem = UITabBarItem(
+            title: "TODAY_TITLE".localize,
+            image: #imageLiteral(resourceName: "today_inactive_icon"),
+            selectedImage: #imageLiteral(resourceName: "today_active_icon")
+        )
+        forecastSection.tabBarItem = UITabBarItem(
+            title: "FORECAST_TITLE".localize,
+            image: #imageLiteral(resourceName: "forecast_inactive_icon"),
+            selectedImage: #imageLiteral(resourceName: "forecast_active_icon")
+        
+        )
         tabBarVC.viewControllers = [weatherSection, forecastSection]
         return tabBarVC
     }
     
-    private func showCurrentWeatherSection() -> UIViewController {
+    private func showCurrentWeatherSection(with transitionHandler: TransitionHandler) -> UIViewController {
         let vc = assembler
             .with(assemblies: CurrentWeatherViewAssembly())
+            .with(globals: transitionHandler)
             .resolver
             .resolve(CurrentWeatherViewController.self)!
         
@@ -35,9 +45,10 @@ class WeatherModule: Module {
         return root
     }
     
-    private func showForecastSection() -> UIViewController {
+    private func showForecastSection(with transitionHandler: TransitionHandler) -> UIViewController {
         let vc = assembler
             .with(assemblies: ForecastViewAssembly())
+            .with(globals: transitionHandler)
             .resolver
             .resolve(ForecastViewController.self)!
         let root = NavigationViewController(rootViewController: vc)

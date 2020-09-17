@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,17 +22,37 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="divider" translatesAutoresizingMaskIntoConstraints="NO" id="w7V-49-wQO">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="PS5-3R-4t1"/>
+                        </constraints>
+                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o7V-XT-3bE">
                         <rect key="frame" x="20" y="12" width="0.0" height="20"/>
                         <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="25"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="divider" translatesAutoresizingMaskIntoConstraints="NO" id="jzP-69-ZeE">
+                        <rect key="frame" x="0.0" y="43" width="320" height="1"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="Gv1-1C-dKv"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="o7V-XT-3bE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="2iD-P3-NIe"/>
+                    <constraint firstItem="w7V-49-wQO" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="6x9-Sx-l13"/>
+                    <constraint firstAttribute="bottom" secondItem="jzP-69-ZeE" secondAttribute="bottom" id="Pkj-0w-Gbh"/>
+                    <constraint firstAttribute="trailing" secondItem="w7V-49-wQO" secondAttribute="trailing" id="R05-Tx-jo6"/>
+                    <constraint firstItem="jzP-69-ZeE" firstAttribute="top" secondItem="o7V-XT-3bE" secondAttribute="bottom" constant="11" id="VN7-XU-ZgP"/>
+                    <constraint firstItem="o7V-XT-3bE" firstAttribute="top" secondItem="w7V-49-wQO" secondAttribute="bottom" constant="11" id="X07-F2-Ysi"/>
+                    <constraint firstItem="jzP-69-ZeE" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="i1b-jb-8u6"/>
+                    <constraint firstItem="w7V-49-wQO" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="jde-dP-dl0"/>
                     <constraint firstAttribute="bottom" secondItem="o7V-XT-3bE" secondAttribute="bottom" constant="12" id="lka-XP-xdL"/>
                     <constraint firstItem="o7V-XT-3bE" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="lok-En-hzd"/>
+                    <constraint firstAttribute="trailing" secondItem="jzP-69-ZeE" secondAttribute="trailing" id="wsx-eG-Dep"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -41,4 +62,7 @@
             <point key="canvasLocation" x="139" y="124"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="divider" width="110" height="1"/>
+    </resources>
 </document>

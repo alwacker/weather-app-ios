@@ -29,4 +29,8 @@ extension String {
         dateFormatter.dateFormat = "HH:mm"
         return dateFormatter.date(from: self) ?? Date()
     }
+
+    var localize: String {
+        NSLocalizedString(self, comment: self)
+    }
 }

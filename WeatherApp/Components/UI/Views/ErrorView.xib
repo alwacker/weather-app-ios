@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -16,6 +18,7 @@
             <connections>
                 <outlet property="contentView" destination="iN0-l3-epB" id="ah7-4Y-nSB"/>
                 <outlet property="errorLabel" destination="jAe-Rz-QE3" id="4pD-rd-BVN"/>
+                <outlet property="settingsButton" destination="b0j-rz-XYG" id="kWn-aC-O9K"/>
                 <outlet property="tryAgainButton" destination="1LH-da-95g" id="lZd-4q-Oj0"/>
             </connections>
         </placeholder>
@@ -25,28 +28,42 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="asdfasdgasgabdfkblksdnblkdsnblksblksnlgkbnsd" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jAe-Rz-QE3">
-                    <rect key="frame" x="50" y="139" width="314" height="117.5"/>
-                    <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="32"/>
+                    <rect key="frame" x="30" y="139" width="354" height="58.5"/>
+                    <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="25"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1LH-da-95g">
-                    <rect key="frame" x="156.5" y="437.5" width="101" height="38"/>
-                    <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="21"/>
-                    <state key="normal" title="Try Again"/>
-                </button>
+                <stackView opaque="NO" contentMode="scaleToFill" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="GU9-qb-9DS">
+                    <rect key="frame" x="120" y="217.5" width="174" height="37"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1LH-da-95g">
+                            <rect key="frame" x="0.0" y="0.0" width="87" height="37"/>
+                            <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="21"/>
+                            <state key="normal" title="Try Again"/>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b0j-rz-XYG">
+                            <rect key="frame" x="87" y="0.0" width="87" height="37"/>
+                            <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="21"/>
+                            <state key="normal" title="Try Again"/>
+                        </button>
+                    </subviews>
+                </stackView>
             </subviews>
-            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-            <constraints>
-                <constraint firstItem="1LH-da-95g" firstAttribute="top" secondItem="jAe-Rz-QE3" secondAttribute="bottom" constant="181" id="QPy-4Q-vqu"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="jAe-Rz-QE3" secondAttribute="trailing" constant="50" id="U7E-Te-nbx"/>
-                <constraint firstItem="jAe-Rz-QE3" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="95" id="WA8-U9-6ya"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="1LH-da-95g" secondAttribute="bottom" constant="464.5" id="XCb-dX-9Cw"/>
-                <constraint firstItem="1LH-da-95g" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="dQA-gG-mdb"/>
-                <constraint firstItem="jAe-Rz-QE3" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="50" id="tzf-bt-NOS"/>
-            </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="jAe-Rz-QE3" secondAttribute="trailing" constant="30" id="U7E-Te-nbx"/>
+                <constraint firstItem="GU9-qb-9DS" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="VBF-if-8Wb"/>
+                <constraint firstItem="jAe-Rz-QE3" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="95" id="WA8-U9-6ya"/>
+                <constraint firstItem="GU9-qb-9DS" firstAttribute="top" secondItem="jAe-Rz-QE3" secondAttribute="bottom" constant="20" id="gFa-34-yWr"/>
+                <constraint firstItem="jAe-Rz-QE3" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="30" id="tzf-bt-NOS"/>
+            </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="152.67857142857142"/>
         </view>
     </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

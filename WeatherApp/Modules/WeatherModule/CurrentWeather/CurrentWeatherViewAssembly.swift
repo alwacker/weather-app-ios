@@ -15,5 +15,7 @@ internal class CurrentWeatherViewAssembly: Assembly {
             .autoregister(CurrentWeatherViewModel.self, initializer: CurrentWeatherViewModel.init)
         container
             .autoregister(CurrentWeatherViewController.self, initializer: CurrentWeatherViewController.init)
+        container
+            .autoregister(WeatherRouter.self, initializer: WeatherRouter.init)
     }
 }

@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ForecastViewController" customModule="WeatherApp" customModuleProvider="target">
             <connections>
+                <outlet property="errorView" destination="JSh-5O-fGb" id="Vnn-tZ-n3u"/>
                 <outlet property="tableView" destination="msC-0n-gtc" id="UlE-NJ-HX7"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -24,26 +27,37 @@
                         <constraint firstAttribute="height" constant="2" id="Dr9-6L-PwI"/>
                     </constraints>
                 </imageView>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="msC-0n-gtc">
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JSh-5O-fGb" customClass="ErrorView" customModule="WeatherApp" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="46" width="414" height="816"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="msC-0n-gtc">
                     <rect key="frame" x="0.0" y="46" width="414" height="850"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
             </subviews>
-            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="Z2M-KT-1BM" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="1z3-3F-Z5Y"/>
                 <constraint firstItem="msC-0n-gtc" firstAttribute="top" secondItem="Z2M-KT-1BM" secondAttribute="bottom" id="3yC-kR-JrD"/>
                 <constraint firstItem="Z2M-KT-1BM" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="9Ij-ex-vdh"/>
+                <constraint firstItem="JSh-5O-fGb" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="9kq-HJ-t1z"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Z2M-KT-1BM" secondAttribute="trailing" id="BDo-Ym-twm"/>
+                <constraint firstItem="JSh-5O-fGb" firstAttribute="top" secondItem="Z2M-KT-1BM" secondAttribute="bottom" id="Kbw-yh-ju1"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="JSh-5O-fGb" secondAttribute="trailing" id="R2D-b9-Ye0"/>
                 <constraint firstItem="msC-0n-gtc" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="UJa-jQ-54C"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="JSh-5O-fGb" secondAttribute="bottom" id="jOe-bY-cpo"/>
                 <constraint firstAttribute="bottom" secondItem="msC-0n-gtc" secondAttribute="bottom" id="lld-yf-A0Y"/>
                 <constraint firstItem="msC-0n-gtc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="qE9-uc-uyX"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="139" y="153"/>
         </view>
     </objects>
     <resources>
         <image name="rainbow_line" width="320" height="2"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

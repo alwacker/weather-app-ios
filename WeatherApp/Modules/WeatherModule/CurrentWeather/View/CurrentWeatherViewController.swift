@@ -49,7 +49,7 @@ class CurrentWeatherViewController: BaseViewController {
     init(viewModel: CurrentWeatherViewModel) {
         self.viewModel = viewModel
         self.manager = CLLocationManager()
-        super.init(nibName: "CurrentWeatherViewController", bundle: nil)
+        super.init(nibName: String(describing: CurrentWeatherViewController.self), bundle: nil)
         
         rx.viewDidLoad
             .bind(to: viewModel.didLoad)
@@ -63,14 +63,29 @@ class CurrentWeatherViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         manager.requestWhenInUseAuthorization()
-        updateLocation()
+        checkAuthorizationStatus()
         setupBinding()
     }
     
+    private func checkAuthorizationStatus() {
+        if CLLocationManager.authorizationStatus() == .denied {
+            unautorized()
+        }
+    }
+    
     private func hideUI(with error: Error) {
+        hideScroll()
+        errorView.setupError(with: error)
+    }
+    
+    private func unautorized() {
+        hideScroll()
+        errorView.setupWarning()
+    }
+    
+    private func hideScroll() {
         scrollView.isHidden = true
         errorView.isHidden = false
-        errorView.setupUI(with: "")
     }
     
     private func showUI(if hidden: Bool) {
@@ -109,26 +124,45 @@ class CurrentWeatherViewController: BaseViewController {
     }
     
     private func setupBinding() {
+        shareButton.rx.tap
+            .bind(to: viewModel.shareButtonPressed)
+            .disposed(by: disposeBag)
+        
+        errorView.tryAgainButtonPressed
+            .bind(to: viewModel.tryAgainButtonPressed)
+            .disposed(by: disposeBag)
+        
+        errorView.settingsButtonPressed
+            .bind(to: viewModel.settingsButtonPressed)
+            .disposed(by: disposeBag)
+        
+        viewModel.authDenied
+            .drive(
+                onNext: { [weak self] in
+                    self?.unautorized()
+                }
+            ).disposed(by: disposeBag)
+        
         viewModel.unhide
             .drive(
                 onNext: { [weak self] in
                     self?.showUI(if: $0)
                 }
-        ).disposed(by: disposeBag)
+            ).disposed(by: disposeBag)
         
         viewModel.disableTracking
             .drive(
                 onNext: { [weak self] in
                     self?.manager.stopUpdatingLocation()
                 }
-        ).disposed(by: disposeBag)
+            ).disposed(by: disposeBag)
         
         viewModel.tryAgain
             .drive(
                 onNext: { [weak self] in
                     self?.updateLocation()
                 }
-        ).disposed(by: disposeBag)
+            ).disposed(by: disposeBag)
         
         viewModel.hide.drive(
             onNext: { [weak self] in

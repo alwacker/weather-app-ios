@@ -19,16 +19,10 @@ class AppRouter {
     
     private func getWeatherModule() -> UIViewController {
         let module = resolver.resolve(WeatherModule.self)!
-        return module.createTabbar()
+        return module.createTabbar(with: self)
     }
-  
     
     public func initialize() -> UIViewController {
-        #if targetEnvironment(macCatalyst)
-            return getCurrentWeatherScreen()
-        
-        #else
         return getWeatherModule()
-        #endif
     }
 }

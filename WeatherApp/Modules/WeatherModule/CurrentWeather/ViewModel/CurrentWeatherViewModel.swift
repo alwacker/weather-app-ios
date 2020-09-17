@@ -17,6 +17,8 @@ class CurrentWeatherViewModel {
     let location = PublishSubject<CLLocation?>()
     let authorizationState = PublishSubject<CLAuthorizationEvent>()
     let tryAgainButtonPressed = PublishSubject<Void>()
+    let settingsButtonPressed = PublishSubject<Void>()
+    let shareButtonPressed = PublishSubject<Void>()
     //outputs
     let title: Driver<String>
     let conditionsText: Driver<String>
@@ -30,10 +32,13 @@ class CurrentWeatherViewModel {
     let disableTracking: Driver<Void>
     let unhide: Driver<Bool>
     let tryAgain: Driver<Void>
+    let authDenied: Driver<Void>
     let hide: Driver<Error>
     let hud: Driver<HudStatus>
     
-    init(service: WeatherService) {
+    private let disposeBag = DisposeBag()
+    
+    init(service: WeatherService, router: WeatherRouter) {
         let request = location.unwrap()
             .flatMapLatest(service.getCurrentWeather)
             .share()
@@ -51,16 +56,37 @@ class CurrentWeatherViewModel {
             .merge(data.toVoid(), error.toVoid())
             .asDriver(onErrorDriveWith: .empty())
         
-        tryAgain = tryAgainButtonPressed
+        let authorized = authorizationState
+            .filter { $0.1 == .authorizedAlways || $0.1 == .authorizedWhenInUse }
+            .toVoid()
+        
+        let deniedAuthorization = authorizationState
+            .filter { $0.1 == .denied }
+            .toVoid()
+        
+        tryAgain = Observable.merge(tryAgainButtonPressed, authorized)
             .asDriver(onErrorDriveWith: .empty())
         
-//        authorizationState.subscribe(onNext: {
-//            switch $0 {
-//            case .denied:
-//            case .authorizedWhenInUse, .authorizedAlways, .authorized:
-//                
-//            }
-//        })
+        deniedAuthorization
+            .subscribe(onNext: router.showAlert)
+            .disposed(by: disposeBag)
+        
+        settingsButtonPressed
+            .subscribe(onNext: router.showSettings)
+            .disposed(by: disposeBag)
+        
+        authDenied = deniedAuthorization
+            .asDriver(onErrorDriveWith: .empty())
+        
+        shareButtonPressed
+            .withLatestFrom(data)
+            .map { String(
+                format: "SHARE_MESSAGE".localize,
+                $0.fullNameLocation,
+                $0.main.temperatureInCelsius,
+                $0.weather.first?.description.capitalized ?? "")
+            }.subscribe(onNext: router.share)
+            .disposed(by: disposeBag)
         
         //A little hack, cause this value not going from BE
         precipitation = didLoad
@@ -98,7 +124,7 @@ class CurrentWeatherViewModel {
             .asDriver(onErrorDriveWith: .empty())
         
         title = didLoad
-            .mapTo("Today")
+            .mapTo("TODAY_TITLE".localize)
             .asDriver(onErrorDriveWith: .empty())
         
         hud = HudStatus.merge(request.hud())

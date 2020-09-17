@@ -9,27 +9,67 @@
 import RxSwift
 import RxCocoa
 import CoreLocation
+import RxCoreLocation
 
 class ForecastViewModel {
     //inputs
     let didLoad = PublishSubject<Void>()
     let location = PublishSubject<CLLocation?>()
-
+    let authorizationState = PublishSubject<CLAuthorizationEvent>()
+    let tryAgainButtonPressed = PublishSubject<Void>()
+    let settingsButtonPressed = PublishSubject<Void>()
+    
     //output
     let title: Driver<String>
     let sections: Driver<[Sections]>
     let disableTracking: Driver<Void>
+    let unhide: Driver<Bool>
+    let tryAgain: Driver<Void>
+    let authDenied: Driver<Void>
+    let hide: Driver<Error>
     let hud: Driver<HudStatus>
     
-    init(service: WeatherService) {
+    private let disposeBag = DisposeBag()
+    
+    init(service: WeatherService, router: WeatherRouter) {
         let request = location
             .unwrap()
             .flatMapLatest(service.getForecast)
             .share()
         
         let data = request.data()
+        let error = request.errors()
         
-        disableTracking = data.toVoid()
+        hide = error
+            .asDriver(onErrorDriveWith: .empty())
+        
+        unhide = data.mapTo(false)
+            .asDriver(onErrorDriveWith: .empty())
+        
+        disableTracking = Observable
+            .merge(data.toVoid(), error.toVoid())
+            .asDriver(onErrorDriveWith: .empty())
+        
+        let authorized = authorizationState
+            .filter { $0.1 == .authorizedAlways || $0.1 == .authorizedWhenInUse }
+            .toVoid()
+        
+        let deniedAuthorization = authorizationState
+            .filter { $0.1 == .denied }
+            .toVoid()
+        
+        tryAgain = Observable.merge(tryAgainButtonPressed, authorized)
+            .asDriver(onErrorDriveWith: .empty())
+        
+        deniedAuthorization
+            .subscribe(onNext: router.showAlert)
+            .disposed(by: disposeBag)
+        
+        settingsButtonPressed
+            .subscribe(onNext: router.showSettings)
+            .disposed(by: disposeBag)
+        
+        authDenied = deniedAuthorization
             .asDriver(onErrorDriveWith: .empty())
         
         sections = request.data()
@@ -37,7 +77,7 @@ class ForecastViewModel {
             .asDriver(onErrorDriveWith: .empty())
 
         title = didLoad
-            .mapTo("Forecast")
+            .mapTo("FORECAST_TITLE".localize)
             .asDriver(onErrorDriveWith: .empty())
         
         hud = HudStatus.merge(request.hud())
@@ -52,7 +92,7 @@ class ForecastViewModel {
             let items = $0.value.map { SectionItem.weatherItem(weather: $0) }
             if todayDay == $0.key.formatDate.dayOfWeek {
                 sections.append(.daySection(items: [.daySection(
-                        section: ("Today", $0.value.first?.dt_txt ?? "")
+                        section: ("TODAY_TITLE".localize, $0.value.first?.dt_txt ?? "")
                     )
                 ]))
             } else {
